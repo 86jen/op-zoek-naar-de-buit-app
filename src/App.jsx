@@ -99,8 +99,8 @@ export default function App() {
 
   function checkQr() {
     if (
-      qrInput.toUpperCase() === huidigeStap.qr ||
-      qrInput === huidigeStap.code
+      qrInput.trim().toUpperCase() === huidigeStap.qr ||
+      qrInput.trim() === huidigeStap.code
     ) {
       setQrFout(false)
       setQrInput('')
@@ -167,7 +167,7 @@ export default function App() {
             <>
               <input
                 type='text'
-                placeholder='Scan QR of vul 4-cijferige code in'
+                placeholder='Scan QR-code of vul 4-cijferige noodcode in'
                 value={qrInput}
                 onChange={(e) => setQrInput(e.target.value)}
                 style={inputStyle}
@@ -180,7 +180,7 @@ export default function App() {
               )}
 
               <button style={buttonStyle} onClick={checkQr}>
-                QR CODE SCANNEN
+                QR / NOODCODE CONTROLEREN
               </button>
             </>
           )}
