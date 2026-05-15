@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 export default function App() {
   const opdrachten = [
     {
@@ -12,25 +14,49 @@ export default function App() {
     }
   ]
 
+  const [huidigeOpdracht, setHuidigeOpdracht] = useState(0)
+
+  function volgendeOpdracht() {
+    if (huidigeOpdracht < opdrachten.length - 1) {
+      setHuidigeOpdracht(huidigeOpdracht + 1)
+    }
+  }
+
+  const item = opdrachten[huidigeOpdracht]
+
   return (
     <div style={{ padding: '40px', fontFamily: 'Arial' }}>
       <h1>Op zoek naar de buit</h1>
 
-      {opdrachten.map((item, index) => (
-        <div
-          key={index}
+      <div
+        style={{
+          border: '1px solid #ccc',
+          padding: '20px',
+          borderRadius: '10px',
+          marginTop: '20px'
+        }}
+      >
+        <h2>{item.titel}</h2>
+
+        <p>
+          <strong>Hint:</strong> {item.hint}
+        </p>
+
+        <p>
+          <strong>Opdracht:</strong> {item.opdracht}
+        </p>
+
+        <button
+          onClick={volgendeOpdracht}
           style={{
-            border: '1px solid #ccc',
-            padding: '20px',
-            marginBottom: '20px',
-            borderRadius: '10px'
+            marginTop: '20px',
+            padding: '10px 20px',
+            cursor: 'pointer'
           }}
         >
-          <h2>{item.titel}</h2>
-          <p><strong>Hint:</strong> {item.hint}</p>
-          <p><strong>Opdracht:</strong> {item.opdracht}</p>
-        </div>
-      ))}
+          Volgende opdracht
+        </button>
+      </div>
     </div>
   )
 }
