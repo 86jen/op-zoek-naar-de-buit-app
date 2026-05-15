@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react'
 
 const stappen = [
   {
+    qr: 'SNACKBAR123',
+    code: '4821',
+  {
     type: 'hint',
     titel: 'QR CODE GEVONDEN',
     tekst: 'Jullie missie start waar zout, saus en snacks samenkomen.'
   },
   {
+    qr: 'SNACKBAR-OPDRACHT',
+    code: '7314',
     type: 'opdracht',
     titel: 'OPDRACHT',
     tekst: 'Maak een foto alsof jullie een geheime deal sluiten.'
@@ -59,6 +64,8 @@ export default function App() {
   const [punten, setPunten] = useState(100)
   const [timer, setTimer] = useState(3600)
   const [flash, setFlash] = useState(false)
+  const [qrInput, setQrInput] = useState('')
+  const [qrFout, setQrFout] = useState(false)
 
   const huidigeStap = stappen[stap]
 
@@ -88,6 +95,19 @@ export default function App() {
 
     audio.volume = 0.5
     audio.play()
+  }
+
+  function checkQr() {
+    if (
+      qrInput.toUpperCase() === huidigeStap.qr ||
+      qrInput === huidigeStap.code
+    ) {
+      setQrFout(false)
+      setQrInput('')
+      volgendeStap()
+    } else {
+      setQrFout(true)
+    }
   }
 
   function volgendeStap() {
@@ -144,9 +164,25 @@ export default function App() {
           <p style={{ lineHeight: '1.7' }}>{huidigeStap.tekst}</p>
 
           {huidigeStap.type === 'hint' && (
-            <button style={buttonStyle} onClick={volgendeStap}>
-              QR CODE GEVONDEN
-            </button>
+            <>
+              <input
+                type='text'
+                placeholder='Scan QR of vul 4-cijferige code in'
+                value={qrInput}
+                onChange={(e) => setQrInput(e.target.value)}
+                style={inputStyle}
+              />
+
+              {qrFout && (
+                <p style={{ color: '#ff4d4d', marginTop: '10px' }}>
+                  Verkeerde QR code
+                </p>
+              )}
+
+              <button style={buttonStyle} onClick={checkQr}>
+                QR CODE SCANNEN
+              </button>
+            </>
           )}
 
           {huidigeStap.type === 'opdracht' && (
@@ -232,6 +268,16 @@ const scoreStyle = {
   background: '#2b2b2b',
   padding: '10px 15px',
   borderRadius: '10px'
+}
+
+const inputStyle = {
+  marginTop: '20px',
+  width: '100%',
+  padding: '14px',
+  borderRadius: '10px',
+  border: 'none',
+  background: '#333',
+  color: 'white'
 }
 
 const alertStyle = {
