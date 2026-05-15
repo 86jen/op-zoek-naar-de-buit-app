@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const stappen = [
   {
@@ -47,160 +47,39 @@ const stappen = [
     tekst: 'Spoedmelding: de politie heeft een signalement ontvangen van 5 jongens van ongeveer 12 tot 13 jaar oud. Ga snel naar de volgende locatie.'
   },
   {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto waarbij één persoon gedragen wordt door de rest van het team.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Maak een foto alsof jullie betrapt zijn terwijl jullie iets illegaals doen.'
-  },
-  {
-    type: 'politie',
-    titel: 'SIRENEBERICHT',
-    tekst: 'WEEWOO WEEWOO. Agenten zijn onderweg naar jullie omgeving. Zorg dat jullie verdwijnen voordat de politie arriveert.'
-  },
-  {
-    type: 'hint',
-    titel: 'QR CODE GEVONDEN',
-    tekst: 'Achter iets dat bepaalt wie mag rijden of stoppen hangt jullie volgende opdracht.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto alsof jullie worden achtervolgd en nergens veilig zijn.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Ga allemaal rug tegen rug staan en maak een bewijsfoto.'
-  },
-  {
-    type: 'politie',
-    titel: 'POLITIEBERICHT',
-    tekst: 'Getuigen melden verdachte jongens in de buurt van verkeersborden. Blijf bewegen en blijf uit handen van de politie.'
-  },
-  {
-    type: 'hint',
-    titel: 'QR CODE GEVONDEN',
-    tekst: 'Ga naar de plek waar mensen eindeloos rondjes rijden. Aan de overkant wacht jullie volgende opdracht.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto terwijl jullie allemaal exact dezelfde pose aannemen.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Doe alsof één van jullie gearresteerd wordt en maak een bewijsfoto.'
-  },
-  {
-    type: 'politie',
-    titel: 'SIRENEBERICHT',
-    tekst: 'Politieauto’s rijden in jullie omgeving. Vermijd opvallend gedrag en ga direct verder.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto alsof jullie stiekem iemand bespioneren.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Maak een foto terwijl iedereen zich achter één persoon probeert te verstoppen.'
-  },
-  {
-    type: 'politie',
-    titel: 'POLITIEBERICHT',
-    tekst: 'Bewoners hebben melding gemaakt van verdachte bewegingen in de wijk. Zorg dat jullie niet herkend worden.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto alsof jullie compleet verdwaald zijn.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Maak een foto waarbij iedereen een zo bang mogelijk gezicht trekt.'
-  },
-  {
-    type: 'politie',
-    titel: 'SIRENEBERICHT',
-    tekst: 'Sirenes komen dichterbij. Jullie hebben nog maar weinig tijd om uit handen van de politie te blijven.'
-  },
-  {
-    type: 'hint',
-    titel: 'QR CODE GEVONDEN',
-    tekst: 'Nog 1 laatste tussenstop voordat de eindlocatie onthuld wordt.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Maak een foto alsof jullie eindelijk de geheime eindlocatie ontdekt hebben.'
-  },
-  {
-    type: 'hint',
-    titel: 'NIEUWE HINT',
-    tekst: 'De eindlocatie ligt waar warmte, water en bubbels samenkomen.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Laat 1 persoon uit de groep een liedje zingen voor hij de volgende hint krijgt.'
-  },
-  {
-    type: 'politie',
-    titel: 'POLITIEBERICHT',
-    tekst: 'De politie denkt dat jullie onderweg zijn naar een schuilplaats. Verplaats jullie snel.'
-  },
-  {
-    type: 'hint',
-    titel: 'QR CODE GEVONDEN',
-    tekst: 'Zoek de plek waar mensen bubbelen.'
-  },
-  {
-    type: 'opdracht',
-    titel: 'OPDRACHT',
-    tekst: 'Loop achter elkaar en doe alsof jullie waggelende ganzen zijn tot jullie het eindpunt bereikt hebben.'
-  },
-  {
-    type: 'politie',
-    titel: 'LAATSTE MELDING',
-    tekst: 'Het lijkt erop dat jullie de politie voorlopig hebben afgeschud…'
-  },
-  {
-    type: 'opdracht',
-    titel: 'EXTRA OPDRACHT',
-    tekst: 'Maak een overwinningsfoto alsof jullie ontsnapt zijn.'
-  },
-  {
-    type: 'politie',
-    titel: 'POLITIEBERICHT',
-    tekst: 'De politie trekt zich voorlopig terug. Interpol neemt het onderzoek over.'
-  },
-  {
     type: 'einde',
-    titel: 'EINDOPDRACHT',
-    tekst: 'Zet alle verzamelde letters in de juiste volgorde.'
+    titel: 'INTERPOL ZOEKT JULLIE',
+    tekst: 'MISSIE VOLTOOID - DE BUIT IS GEVONDEN.'
   }
 ]
 
 export default function App() {
   const [stap, setStap] = useState(0)
   const [foto, setFoto] = useState(null)
+  const [punten, setPunten] = useState(100)
+  const [timer, setTimer] = useState(3600)
+  const [flash, setFlash] = useState(false)
 
   const huidigeStap = stappen[stap]
 
-  function volgendeStap() {
-    setFoto(null)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0))
+    }, 1000)
 
-    if (stap < stappen.length - 1) {
-      setStap(stap + 1)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if (huidigeStap.type === 'politie') {
+      speelSirene()
+      setFlash(true)
+
+      setTimeout(() => {
+        setFlash(false)
+      }, 3000)
     }
-  }
+  }, [stap])
 
   function speelSirene() {
     const audio = new Audio(
@@ -211,16 +90,22 @@ export default function App() {
     audio.play()
   }
 
-  React.useEffect(() => {
-    if (huidigeStap.type === 'politie') {
-      speelSirene()
+  function volgendeStap() {
+    setFoto(null)
+
+    if (stap < stappen.length - 1) {
+      setStap(stap + 1)
     }
-  }, [stap])
+  }
+
+  const minuten = Math.floor(timer / 60)
+  const seconden = timer % 60
 
   return (
     <div
       style={{
-        background: '#111',
+        background: flash ? '#5c0000' : '#111',
+        transition: '0.3s',
         minHeight: '100vh',
         color: 'white',
         padding: '30px',
@@ -233,18 +118,25 @@ export default function App() {
           margin: '0 auto',
           background: '#1f1f1f',
           padding: '30px',
-          borderRadius: '20px'
+          borderRadius: '20px',
+          boxShadow: '0 0 30px rgba(0,0,0,0.5)'
         }}
       >
         <h1 style={{ color: '#ff3b3b' }}>OP ZOEK NAAR DE BUIT</h1>
+
+        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+          <div style={scoreStyle}>Score: {punten}</div>
+          <div style={scoreStyle}>
+            Tijd: {minuten}:{seconden.toString().padStart(2, '0')}
+          </div>
+        </div>
 
         <div
           style={{
             background:
               huidigeStap.type === 'politie' ? '#500' : '#2b2b2b',
             padding: '20px',
-            borderRadius: '15px',
-            marginTop: '20px'
+            borderRadius: '15px'
           }}
         >
           <h2>{huidigeStap.titel}</h2>
@@ -253,7 +145,7 @@ export default function App() {
 
           {huidigeStap.type === 'hint' && (
             <button style={buttonStyle} onClick={volgendeStap}>
-              QR code gevonden
+              QR CODE GEVONDEN
             </button>
           )}
 
@@ -284,8 +176,14 @@ export default function App() {
                     }}
                   />
 
-                  <button style={buttonStyle} onClick={volgendeStap}>
-                    Bewijs versturen
+                  <button
+                    style={buttonStyle}
+                    onClick={() => {
+                      setPunten(punten - 5)
+                      volgendeStap()
+                    }}
+                  >
+                    FOTO VERSTUREN
                   </button>
                 </>
               )}
@@ -293,16 +191,25 @@ export default function App() {
           )}
 
           {huidigeStap.type === 'politie' && (
-            <button
-              style={buttonStyle}
-              onClick={volgendeStap}
-            >
-              Vluchten
-            </button>
+            <>
+              <div style={alertStyle}>POLITIEALERT</div>
+
+              <button style={buttonStyle} onClick={volgendeStap}>
+                VLUCHTEN
+              </button>
+            </>
           )}
 
           {huidigeStap.type === 'einde' && (
-            <button style={buttonStyle}>MISSIE VOLTOOID - BUIT GEVONDEN</button>
+            <>
+              <h2 style={{ color: '#ff3b3b' }}>
+                EINDSCORE: {punten}
+              </h2>
+
+              <button style={buttonStyle}>
+                MISSIE VOLTOOID
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -319,4 +226,19 @@ const buttonStyle = {
   color: 'white',
   fontWeight: 'bold',
   cursor: 'pointer'
+}
+
+const scoreStyle = {
+  background: '#2b2b2b',
+  padding: '10px 15px',
+  borderRadius: '10px'
+}
+
+const alertStyle = {
+  background: '#ff0000',
+  padding: '12px',
+  marginTop: '20px',
+  borderRadius: '10px',
+  fontWeight: 'bold',
+  animation: 'pulse 1s infinite'
 }
