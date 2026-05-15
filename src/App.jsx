@@ -16,6 +16,7 @@ export default function App() {
   ]
 
   const [huidigeOpdracht, setHuidigeOpdracht] = useState(0)
+  const [punten, setPunten] = useState(100)
 
   function volgendeOpdracht() {
     if (huidigeOpdracht < opdrachten.length - 1) {
@@ -28,6 +29,7 @@ export default function App() {
   return (
     <div style={{ padding: '40px', fontFamily: 'Arial' }}>
       <h1>Op zoek naar de buit</h1>
+      <h2>Punten: {punten}</h2>
 
       <div
         style={{
@@ -50,7 +52,10 @@ export default function App() {
 </p>
 
         <button
-          onClick={volgendeOpdracht}
+         onClick={() => {
+  setPunten(punten - 10)
+  volgendeOpdracht()
+}}
           style={{
             marginTop: '20px',
             padding: '10px 20px',
