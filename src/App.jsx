@@ -5,7 +5,8 @@ export default function App() {
     {
       titel: 'Snackbar',
       hint: 'Hier komen saus en snacks samen.',
-      opdracht: 'Maak een groepsfoto alsof jullie iets verdachts bespreken.'
+      opdracht: 'Maak een groepsfoto alsof jullie iets verdachts bespreken.',
+      politie: 'Melding: verdachte groep gezien bij snackbar.'
     },
     {
       titel: 'Kerkhof',
