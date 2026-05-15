@@ -47,7 +47,7 @@ export default function App() {
 
         <p>
           <strong>Opdracht:</strong> {item.opdracht}
-        </p><p>
+        </p>
   <strong>Politie:</strong> {item.politie}
 </p>
 
