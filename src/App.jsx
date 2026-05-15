@@ -1,33 +1,206 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
+const stappen = [
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Jullie missie start waar zout, saus en snacks samenkomen.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie een geheime deal sluiten.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Maak een groepsfoto zonder dat iemand de grond raakt.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'De politie heeft camerabeelden ontvangen van 5 jongens bij een snackbar. Verlaat de locatie direct en blijf uit handen van de politie.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Zoek de plek waar stilte begint. Kijk goed om je heen en ga even zitten.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie een zombieaanval proberen te overleven.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Steek de weg over naar de plek waar jongeren dagelijks vastzitten.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Verander jullie uiterlijk. Ruil onderling één kledingstuk en maak hier een bewijsfoto van.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'Spoedmelding: de politie heeft een signalement ontvangen van 5 jongens van ongeveer 12 tot 13 jaar oud. Ga snel naar de volgende locatie.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto waarbij één persoon gedragen wordt door de rest van het team.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Maak een foto alsof jullie betrapt zijn terwijl jullie iets illegaals doen.'
+  },
+  {
+    type: 'politie',
+    titel: 'SIRENEBERICHT',
+    tekst: 'WEEWOO WEEWOO. Agenten zijn onderweg naar jullie omgeving. Zorg dat jullie verdwijnen voordat de politie arriveert.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Achter iets dat bepaalt wie mag rijden of stoppen hangt jullie volgende opdracht.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie worden achtervolgd en nergens veilig zijn.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Ga allemaal rug tegen rug staan en maak een bewijsfoto.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'Getuigen melden verdachte jongens in de buurt van verkeersborden. Blijf bewegen en blijf uit handen van de politie.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Ga naar de plek waar mensen eindeloos rondjes rijden. Aan de overkant wacht jullie volgende opdracht.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto terwijl jullie allemaal exact dezelfde pose aannemen.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Doe alsof één van jullie gearresteerd wordt en maak een bewijsfoto.'
+  },
+  {
+    type: 'politie',
+    titel: 'SIRENEBERICHT',
+    tekst: 'Politieauto’s rijden in jullie omgeving. Vermijd opvallend gedrag en ga direct verder.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie stiekem iemand bespioneren.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Maak een foto terwijl iedereen zich achter één persoon probeert te verstoppen.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'Bewoners hebben melding gemaakt van verdachte bewegingen in de wijk. Zorg dat jullie niet herkend worden.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie compleet verdwaald zijn.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Maak een foto waarbij iedereen een zo bang mogelijk gezicht trekt.'
+  },
+  {
+    type: 'politie',
+    titel: 'SIRENEBERICHT',
+    tekst: 'Sirenes komen dichterbij. Jullie hebben nog maar weinig tijd om uit handen van de politie te blijven.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Nog 1 laatste tussenstop voordat de eindlocatie onthuld wordt.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Maak een foto alsof jullie eindelijk de geheime eindlocatie ontdekt hebben.'
+  },
+  {
+    type: 'hint',
+    titel: 'NIEUWE HINT',
+    tekst: 'De eindlocatie ligt waar warmte, water en bubbels samenkomen.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Laat 1 persoon uit de groep een liedje zingen voor hij de volgende hint krijgt.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'De politie denkt dat jullie onderweg zijn naar een schuilplaats. Verplaats jullie snel.'
+  },
+  {
+    type: 'hint',
+    titel: 'QR CODE GEVONDEN',
+    tekst: 'Zoek de plek waar mensen bubbelen.'
+  },
+  {
+    type: 'opdracht',
+    titel: 'OPDRACHT',
+    tekst: 'Loop achter elkaar en doe alsof jullie waggelende ganzen zijn tot jullie het eindpunt bereikt hebben.'
+  },
+  {
+    type: 'politie',
+    titel: 'LAATSTE MELDING',
+    tekst: 'Het lijkt erop dat jullie de politie voorlopig hebben afgeschud…'
+  },
+  {
+    type: 'opdracht',
+    titel: 'EXTRA OPDRACHT',
+    tekst: 'Maak een overwinningsfoto alsof jullie ontsnapt zijn.'
+  },
+  {
+    type: 'politie',
+    titel: 'POLITIEBERICHT',
+    tekst: 'De politie trekt zich voorlopig terug. Interpol neemt het onderzoek over.'
+  },
+  {
+    type: 'einde',
+    titel: 'EINDOPDRACHT',
+    tekst: 'Zet alle verzamelde letters in de juiste volgorde.'
+  }
+]
 
 export default function App() {
-  const opdrachten = [
-    {
-      titel: 'Snackbar',
-      hint: 'Hier komen saus en snacks samen.',
-      opdracht: 'Maak een groepsfoto alsof jullie een geheime deal sluiten.',
-      politie: 'Melding: verdachte groep gezien bij snackbar.'
-    },
-    {
-      titel: 'Kerkhof',
-      hint: 'Zoek de plek waar stilte begint.',
-      opdracht: 'Maak een foto alsof jullie een zombieaanval overleven.',
-      politie: 'Spoedmelding: politie zoekt 5 jongens van 12-13 jaar.'
-    },
-    {
-      titel: 'School',
-      hint: 'Ga naar de plek waar jongeren dagelijks vastzitten.',
-      opdracht: 'Maak een foto waarbij één persoon gedragen wordt.',
-      politie: 'Agenten zijn onderweg naar jullie locatie.'
-    }
-  ]
-
-  const [huidigeOpdracht, setHuidigeOpdracht] = useState(0)
-  const [fase, setFase] = useState('hint')
+  const [stap, setStap] = useState(0)
   const [foto, setFoto] = useState(null)
-  const [punten, setPunten] = useState(100)
 
-  const item = opdrachten[huidigeOpdracht]
+  const huidigeStap = stappen[stap]
+
+  function volgendeStap() {
+    setFoto(null)
+
+    if (stap < stappen.length - 1) {
+      setStap(stap + 1)
+    }
+  }
 
   function speelSirene() {
     const audio = new Audio(
@@ -38,13 +211,11 @@ export default function App() {
     audio.play()
   }
 
-  function volgendeLocatie() {
-    if (huidigeOpdracht < opdrachten.length - 1) {
-      setHuidigeOpdracht(huidigeOpdracht + 1)
-      setFase('hint')
-      setFoto(null)
+  React.useEffect(() => {
+    if (huidigeStap.type === 'politie') {
+      speelSirene()
     }
-  }
+  }, [stap])
 
   return (
     <div
@@ -60,65 +231,37 @@ export default function App() {
         style={{
           maxWidth: '700px',
           margin: '0 auto',
-          background: '#1c1c1c',
+          background: '#1f1f1f',
           padding: '30px',
-          borderRadius: '20px',
-          boxShadow: '0 0 20px rgba(0,0,0,0.5)'
+          borderRadius: '20px'
         }}
       >
         <h1 style={{ color: '#ff3b3b' }}>OP ZOEK NAAR DE BUIT</h1>
 
-        <h2>Punten: {punten}</h2>
-
         <div
           style={{
-            background: '#2b2b2b',
+            background:
+              huidigeStap.type === 'politie' ? '#500' : '#2b2b2b',
             padding: '20px',
             borderRadius: '15px',
             marginTop: '20px'
           }}
         >
-          <h2>{item.titel}</h2>
+          <h2>{huidigeStap.titel}</h2>
 
-          {fase === 'hint' && (
-            <>
-              <p>
-                <strong>Hint:</strong> {item.hint}
-              </p>
+          <p style={{ lineHeight: '1.7' }}>{huidigeStap.tekst}</p>
 
-              <button
-                onClick={() => setFase('opdracht')}
-                style={buttonStyle}
-              >
-                Plek gevonden
-              </button>
-            </>
+          {huidigeStap.type === 'hint' && (
+            <button style={buttonStyle} onClick={volgendeStap}>
+              QR code gevonden
+            </button>
           )}
 
-          {fase === 'opdracht' && (
+          {huidigeStap.type === 'opdracht' && (
             <>
-              <p>
-                <strong>Opdracht:</strong> {item.opdracht}
-              </p>
-
-              <button
-                onClick={() => setFase('upload')}
-                style={buttonStyle}
-              >
-                Opdracht uitgevoerd
-              </button>
-            </>
-          )}
-
-          {fase === 'upload' && (
-            <>
-              <p>
-                <strong>Upload bewijsfoto:</strong>
-              </p>
-
               <input
-                type="file"
-                accept="image/*"
+                type='file'
+                accept='image/*'
                 onChange={(e) => {
                   const file = e.target.files[0]
 
@@ -126,13 +269,14 @@ export default function App() {
                     setFoto(URL.createObjectURL(file))
                   }
                 }}
+                style={{ marginTop: '20px' }}
               />
 
               {foto && (
                 <>
                   <img
                     src={foto}
-                    alt="bewijs"
+                    alt='bewijs'
                     style={{
                       width: '100%',
                       marginTop: '20px',
@@ -140,14 +284,7 @@ export default function App() {
                     }}
                   />
 
-                  <button
-                    onClick={() => {
-                      speelSirene()
-                      setPunten(punten - 10)
-                      setFase('politie')
-                    }}
-                    style={buttonStyle}
-                  >
+                  <button style={buttonStyle} onClick={volgendeStap}>
                     Bewijs versturen
                   </button>
                 </>
@@ -155,28 +292,17 @@ export default function App() {
             </>
           )}
 
-          {fase === 'politie' && (
-            <>
-              <div
-                style={{
-                  background: '#500',
-                  padding: '20px',
-                  borderRadius: '15px',
-                  marginTop: '20px'
-                }}
-              >
-                <h3>POLITIEBERICHT</h3>
+          {huidigeStap.type === 'politie' && (
+            <button
+              style={buttonStyle}
+              onClick={volgendeStap}
+            >
+              Vluchten
+            </button>
+          )}
 
-                <p>{item.politie}</p>
-              </div>
-
-              <button
-                onClick={volgendeLocatie}
-                style={buttonStyle}
-              >
-                Vlucht naar volgende locatie
-              </button>
-            </>
+          {huidigeStap.type === 'einde' && (
+            <button style={buttonStyle}>MISSIE VOLTOOID - BUIT GEVONDEN</button>
           )}
         </div>
       </div>
